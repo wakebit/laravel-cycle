@@ -26,7 +26,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:9.*" "orchestra/testbench:7.*" -sno-interaction --no-update
+          composer require "laravel/framework:9.*" "orchestra/testbench:7.*" --no-interaction --no-update
           composer update --prefer-stable --prefer-dist --no-interaction
 
       - name: Execute tests
