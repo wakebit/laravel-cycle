@@ -1,0 +1,53 @@
+{
+    "name": "wakebit/laravel-cycle",
+    "description": "Cycle ORM integration with the Laravel Framework",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2|^7.3|^7.4|^8.0|^8.1",
+        "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+        "wakebit/cycle-bridge": "1.x-dev"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4",
+        "orchestra/testbench": "^4.8 || ^5.2 || ^6.0 || ^7.0",
+        "phpunit/phpunit": "^8.5 || ^9.5",
+        "psalm/plugin-phpunit": "^0.16.1",
+        "vimeo/psalm": "^4.22"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wakebit\\LaravelCycle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wakebit\\LaravelCycle\\TestsApp\\": "tests/App",
+            "Wakebit\\LaravelCycle\\Tests\\": "tests/src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../cycle-bridge"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wakebit\\LaravelCycle\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        },
+        "minimum-stability": "dev",
+        "prefer-stable": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
