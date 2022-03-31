@@ -1,0 +1,33 @@
+name: Tests Laravel 8
+
+on: [push, pull_request]
+
+jobs:
+  tests-laravel-8:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [7.3, 7.4, 8.0, 8.1]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, sqlite, pdo_sqlite, iconv
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:8.*" "orchestra/testbench:6.*" -sno-interaction --no-update
+          composer update --prefer-stable --prefer-dist --no-interaction
+
+      - name: Execute tests
+        run: vendor/bin/phpunit

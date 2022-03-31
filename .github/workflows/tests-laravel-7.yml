@@ -1,0 +1,33 @@
+name: Tests Laravel 7
+
+on: [push, pull_request]
+
+jobs:
+  tests-laravel-7:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [7.2, 7.3, 7.4, 8.0]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, sqlite, pdo_sqlite, iconv
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:7.*" "orchestra/testbench:5.*" --no-interaction --no-update
+          composer update --prefer-stable --prefer-dist --no-interaction
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
