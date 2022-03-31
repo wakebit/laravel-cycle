@@ -3,7 +3,7 @@ This package provides an integration [Cycle ORM v1](https://cycle-orm.dev) with 
 
 ## Requirements
 * PHP >= 7.2
-* Laravel 6, 7, 8, 9
+* Laravel 7, 8, 9
 
 ## Installation
 1. Install the package via composer:
