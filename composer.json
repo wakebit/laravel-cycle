@@ -8,7 +8,7 @@
         "illuminate/console": "^6.0|^7.0|^8.0|^9.0",
         "illuminate/contracts": "^6.0|^7.0|^8.0|^9.0",
         "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
-        "wakebit/cycle-bridge": "1.x-dev"
+        "wakebit/cycle-bridge": "^1.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.4",
@@ -28,12 +28,6 @@
             "Wakebit\\LaravelCycle\\Tests\\": "tests/src"
         }
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../cycle-bridge"
-        }
-    ],
     "extra": {
         "laravel": {
             "providers": [
@@ -49,5 +43,6 @@
         "prefer-stable": true,
         "sort-packages": true
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
