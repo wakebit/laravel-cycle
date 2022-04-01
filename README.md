@@ -147,69 +147,29 @@ return [
 ```
 
 #### Commands
-- Generate ORM schema migrations:
-    ```bash
-    php artisan cycle:schema:migrate
-    ```
-  Options:
-    - `--run`: Automatically run generated migration.
-    - `-v`: Verbose output.
-- Compile and cache ORM schema:
-    ```bash
-    php artisan cycle:schema:cache
-    ```
-- Clear cached schema (schema will be generated every request now):
-    ```bash
-    php artisan cycle:schema:clear
-    ```
-- Sync ORM schema with database without intermediate migration (risk operation!):
-    ```bash
-    php artisan cycle:schema:sync
-    ```
+| Command                            | Description                                                                    | Options                                                                      |
+|------------------------------------|--------------------------------------------------------------------------------|:-----------------------------------------------------------------------------|
+| `php artisan cycle:schema:migrate` | Generate ORM schema migrations                                                 | - `--run`: Automatically run generated migration.<br>- `-v`: Verbose output. |
+| `php artisan cycle:schema:cache`   | Compile and cache ORM schema                                                   |                                                                              |
+| `php artisan cycle:schema:clear`   | Clear cached schema (schema will be generated every request now)               |                                                                              |
+| `php artisan cycle:schema:sync`    | Sync ORM schema with database without intermediate migration (risk operation!) |                                                                              |
 
 ## Database migrations
 You can specify the name of migrations table, the path where migrations will be created in `cycle.migrations` config key.
 
 #### Commands
-- Initialize migrator. This command creates a table for migrations:
-    ```bash
-    php artisan cycle:migrate:init
-    ```
-- Run all outstanding migrations:
-    ```bash
-    php artisan cycle:migrate
-    ```
-  Options:
-    - `--one`: Execute only one (first) migration.
-    - `--force`: Force the operation to run when in production.
-- Rollback the last migration:
-    ```bash
-    php artisan cycle:migrate:rollback
-    ```
-  Options:
-    - `--all`: Rollback all executed migrations.
-    - `--force`: Force the operation to run when in production.
-- Get a list of available migrations:
-    ```bash
-    php artisan cycle:migrate:status
-    ```
+| Command                              | Description                                        | Options                                                                                                       |
+|--------------------------------------|----------------------------------------------------|:--------------------------------------------------------------------------------------------------------------|
+| `php artisan cycle:migrate:init`     | Initialize migrator: create a table for migrations |                                                                                                               |
+| `php artisan cycle:migrate`          | Run all outstanding migrations                     | - `--one`: Execute only one (first) migration.<br>- `--force`: Force the operation to run when in production. |
+| `php artisan cycle:migrate:rollback` | Rollback the last migration                        | - `--all`: Rollback all executed migrations.<br>- `--force`: Force the operation to run when in production.   |
+| `php artisan cycle:migrate:status`   | Get a list of available migrations                 |                                                                                                               |
 
 ## Database commands
-- Get list of available databases, their tables and records count:
-    ```bash
-    php artisan cycle:db:list
-    ```
-  Options:
-    - `--database`: Database name.
-- Describe table schema of specific database:
-    ```bash
-    php artisan cycle:db:table <table>
-    ```
-  Arguments:
-    - `table`: Table name.
-
-  Options:
-    - `--database`: Database name.
+| Command                              | Description                                                     | Options                       |
+|--------------------------------------|-----------------------------------------------------------------|:------------------------------|
+| `php artisan cycle:db:list`          | Get list of available databases, their tables and records count | - `--database`: Database name |
+| `php artisan cycle:db:table <table>` | Describe table schema of specific database                      | - `--database`: Database name |
 
 ## Writing tests
 If you are using memory database (SQLite) you can just run migrations in the `setUp` method of the your test:
