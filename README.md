@@ -2,7 +2,7 @@
 This package provides an integration [Cycle ORM v1](https://cycle-orm.dev) with the Laravel Framework. Internally, it uses [the bridge](https://github.com/wakebit/cycle-bridge) package that can be used with almost any framework.
 
 ## Requirements
-* PHP >= 7.2
+* PHP >= 8.0
 * Laravel 7, 8, 9
 
 ## Installation
