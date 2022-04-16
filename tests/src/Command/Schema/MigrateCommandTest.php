@@ -6,6 +6,7 @@ namespace Wakebit\LaravelCycle\Tests\Command\Schema;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Spiral\Database\DatabaseInterface;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class MigrateCommandTest extends TestCase
@@ -69,7 +70,7 @@ final class MigrateCommandTest extends TestCase
     {
         $this->artisan('cycle:schema:migrate')
             ->expectsOutput('Outstanding migrations found, run `cycle:migrate` first.')
-            ->assertExitCode(1);
+            ->assertExitCode(Command::FAILURE);
 
         $this->assertNoChangesInMigrationFiles();
     }
@@ -85,7 +86,7 @@ final class MigrateCommandTest extends TestCase
             ->expectsOutput('• default.tags')
             ->expectsOutput('    - create table')
             ->expectsOutput('    - add column id')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertHasChangesInMigrationFiles();
         $this->assertFalse($this->db->table('tags')->exists());
@@ -100,7 +101,7 @@ final class MigrateCommandTest extends TestCase
         $this->artisan('cycle:schema:migrate', ['--run' => true])
             ->expectsOutput('Detecting schema changes:')
             ->expectsOutput('• default.tags')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertHasChangesInMigrationFiles();
         $this->assertTrue($this->db->table('tags')->exists());

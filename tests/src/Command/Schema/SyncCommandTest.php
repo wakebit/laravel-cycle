@@ -6,6 +6,7 @@ namespace Wakebit\LaravelCycle\Tests\Command\Schema;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Spiral\Database\DatabaseInterface;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class SyncCommandTest extends TestCase
@@ -51,7 +52,7 @@ final class SyncCommandTest extends TestCase
             ->expectsOutput('    - create table')
             ->expectsOutput('    - add column id')
             ->expectsOutput(sprintf("\nORM Schema has been synchronized."))
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertNoChangesInMigrationFiles();
         $this->assertTrue($this->db->table('tags')->exists());

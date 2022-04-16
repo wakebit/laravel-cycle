@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Wakebit\LaravelCycle\Tests\Command\Migrate;
 
 use Spiral\Database\DatabaseInterface;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class InitCommandTest extends TestCase
@@ -17,7 +18,7 @@ final class InitCommandTest extends TestCase
         $this->assertCount(0, $db->getTables());
 
         $this->artisan('cycle:migrate:init')
-            ->assertExitCode(0)
+            ->assertExitCode(Command::SUCCESS)
             ->expectsOutput('Migrations table were successfully created.');
 
         $tables = $db->getTables();

@@ -6,6 +6,7 @@ namespace Wakebit\LaravelCycle\Tests\Command\Migrate;
 
 use Spiral\Database\DatabaseInterface;
 use Spiral\Migrations\Config\MigrationConfig;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class MigrateCommandTest extends TestCase
@@ -38,7 +39,7 @@ final class MigrateCommandTest extends TestCase
             ->expectsOutput('Confirmation is required to run migrations!')
             ->expectsQuestion('<question>Would you like to continue?</question> ', false)
             ->expectsOutput('Cancelling operation...')
-            ->assertExitCode(1);
+            ->assertExitCode(Command::FAILURE);
 
         $this->assertNoTablesArePresent();
     }
@@ -54,7 +55,7 @@ final class MigrateCommandTest extends TestCase
             ->expectsOutput('Migration 0_default_create_articles was successfully executed.')
             ->expectsOutput('Migration 0_default_change_articles_add_description was successfully executed.')
             ->expectsOutput('Migration 0_default_create_customers was successfully executed.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertAllTablesArePresent();
     }
@@ -67,7 +68,7 @@ final class MigrateCommandTest extends TestCase
             ->expectsOutput('Migration 0_default_create_articles was successfully executed.')
             ->expectsOutput('Migration 0_default_change_articles_add_description was successfully executed.')
             ->expectsOutput('Migration 0_default_create_customers was successfully executed.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertAllTablesArePresent();
     }
@@ -76,7 +77,7 @@ final class MigrateCommandTest extends TestCase
     {
         $this->artisan('cycle:migrate --one')
             ->expectsOutput('Migration 0_default_create_articles was successfully executed.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $tables = $this->db->getTables();
         $this->assertCount(2, $tables);
@@ -88,22 +89,22 @@ final class MigrateCommandTest extends TestCase
     {
         $this->assertNoTablesArePresent();
 
-        $this->artisan('cycle:migrate')->assertExitCode(0);
+        $this->artisan('cycle:migrate')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesArePresent();
 
         $this->artisan('cycle:migrate')
             ->expectsOutput('No outstanding migrations were found.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertAllTablesArePresent();
     }
 
     public function testWithInitiatedMigrator(): void
     {
-        $this->artisan('cycle:migrate:init')->assertExitCode(0);
+        $this->artisan('cycle:migrate:init')->assertExitCode(Command::SUCCESS);
         $this->assertOnlyMigrationsTableIsPresent();
 
-        $this->artisan('cycle:migrate')->assertExitCode(0);
+        $this->artisan('cycle:migrate')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesArePresent();
     }
 
@@ -111,7 +112,7 @@ final class MigrateCommandTest extends TestCase
     {
         $this->assertNoTablesArePresent();
 
-        $this->artisan('cycle:migrate')->assertExitCode(0);
+        $this->artisan('cycle:migrate')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesArePresent();
     }
 

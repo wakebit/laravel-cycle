@@ -6,6 +6,7 @@ namespace Wakebit\LaravelCycle\Tests\Command\Migrate;
 
 use Spiral\Database\DatabaseInterface;
 use Spiral\Migrations\Config\MigrationConfig;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class RollbackCommandTest extends TestCase
@@ -38,7 +39,7 @@ final class RollbackCommandTest extends TestCase
             ->expectsOutput('Confirmation is required to run migrations!')
             ->expectsQuestion('<question>Would you like to continue?</question> ', false)
             ->expectsOutput('Cancelling operation...')
-            ->assertExitCode(1);
+            ->assertExitCode(Command::FAILURE);
 
         $this->assertAllTablesArePresent();
     }
@@ -52,7 +53,7 @@ final class RollbackCommandTest extends TestCase
             ->expectsOutput('Confirmation is required to run migrations!')
             ->expectsQuestion('<question>Would you like to continue?</question> ', true)
             ->expectsOutput('Migration 0_default_create_customers was successfully rolled back.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertAllTablesExceptLatestArePresent();
     }
@@ -64,7 +65,7 @@ final class RollbackCommandTest extends TestCase
 
         $this->artisan('cycle:migrate:rollback --force')
             ->expectsOutput('Migration 0_default_create_customers was successfully rolled back.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertAllTablesExceptLatestArePresent();
     }
@@ -77,7 +78,7 @@ final class RollbackCommandTest extends TestCase
             ->expectsOutput('Migration 0_default_create_customers was successfully rolled back.')
             ->expectsOutput('Migration 0_default_change_articles_add_description was successfully rolled back.')
             ->expectsOutput('Migration 0_default_create_articles was successfully rolled back.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertOnlyMigrationsTableIsPresent();
     }
@@ -88,17 +89,17 @@ final class RollbackCommandTest extends TestCase
 
         $this->artisan('cycle:migrate:rollback')
             ->expectsOutput('No executed migrations were found.')
-            ->assertExitCode(0);
+            ->assertExitCode(Command::SUCCESS);
 
         $this->assertOnlyMigrationsTableIsPresent();
     }
 
     public function testWithConfiguredMigrator(): void
     {
-        $this->artisan('cycle:migrate:init')->assertExitCode(0);
+        $this->artisan('cycle:migrate:init')->assertExitCode(Command::SUCCESS);
         $this->assertOnlyMigrationsTableIsPresent();
 
-        $this->artisan('cycle:migrate:rollback')->assertExitCode(0);
+        $this->artisan('cycle:migrate:rollback')->assertExitCode(Command::SUCCESS);
         $this->assertOnlyMigrationsTableIsPresent();
     }
 
@@ -106,13 +107,13 @@ final class RollbackCommandTest extends TestCase
     {
         $this->assertNoTablesArePresent();
 
-        $this->artisan('cycle:migrate:rollback')->assertExitCode(0);
+        $this->artisan('cycle:migrate:rollback')->assertExitCode(Command::SUCCESS);
         $this->assertOnlyMigrationsTableIsPresent();
     }
 
     private function callMigrateCommand(): void
     {
-        $this->artisan('cycle:migrate --force')->assertExitCode(0);
+        $this->artisan('cycle:migrate --force')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesArePresent();
     }
 

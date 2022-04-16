@@ -6,6 +6,7 @@ namespace Wakebit\LaravelCycle\Tests\Command\Migrate;
 
 use Spiral\Database\DatabaseInterface;
 use Spiral\Migrations\Config\MigrationConfig;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 /**
@@ -36,7 +37,7 @@ final class StatusCommandTest extends TestCase
     {
         $this->assertNoTablesArePresent();
 
-        $this->artisan('cycle:migrate:status')->assertExitCode(0);
+        $this->artisan('cycle:migrate:status')->assertExitCode(Command::SUCCESS);
         $this->assertOnlyMigrationsTableIsPresent();
     }
 
@@ -46,7 +47,7 @@ final class StatusCommandTest extends TestCase
 
         $this->artisan('cycle:migrate:status')
             ->expectsOutput('No migrations were found.')
-            ->assertExitCode(1);
+            ->assertExitCode(Command::FAILURE);
     }
 
     public function testOutputTable(): void
@@ -55,7 +56,7 @@ final class StatusCommandTest extends TestCase
         $this->prepareMigrations();
 
         $command = $this->artisan('cycle:migrate:status');
-        $command->assertExitCode(0);
+        $command->assertExitCode(Command::SUCCESS);
 
         if (version_compare($this->app->version(), '7.0.0', '>=') > 0) {
             $command->expectsTable(
@@ -71,10 +72,10 @@ final class StatusCommandTest extends TestCase
 
     private function prepareMigrations(): void
     {
-        $this->artisan('cycle:migrate')->assertExitCode(0);
+        $this->artisan('cycle:migrate')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesArePresent();
 
-        $this->artisan('cycle:migrate:rollback')->assertExitCode(0);
+        $this->artisan('cycle:migrate:rollback')->assertExitCode(Command::SUCCESS);
         $this->assertAllTablesExceptLatestArePresent();
     }
 

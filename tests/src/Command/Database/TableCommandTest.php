@@ -14,6 +14,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Spiral\Database\Database;
 use Spiral\Database\DatabaseInterface;
 use Spiral\Database\Exception\DBALException;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class TableCommandTest extends TestCase
@@ -60,7 +61,7 @@ final class TableCommandTest extends TestCase
         /** @var Kernel $console */
         $console = $this->app->get(Kernel::class);
         $exitCode = $console->call('cycle:db:table', ['--database' => 'default', 'table' => 'sample']);
-        $this->assertSame(0, $exitCode);
+        $this->assertSame(Command::SUCCESS, $exitCode);
 
         $realOutput = $console->output();
         $expectedOutput = [

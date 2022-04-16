@@ -15,6 +15,7 @@ use Spiral\Database\Database;
 use Spiral\Database\DatabaseInterface;
 use Spiral\Database\DatabaseManager;
 use Spiral\Database\DatabaseProviderInterface;
+use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class ListCommandTest extends TestCase
@@ -39,7 +40,7 @@ final class ListCommandTest extends TestCase
         /** @var Kernel $console */
         $console = $this->app->get(Kernel::class);
         $exitCode = $console->call('cycle:db:list');
-        $this->assertSame(0, $exitCode);
+        $this->assertSame(Command::SUCCESS, $exitCode);
 
         $realOutput = $console->output();
         $expectedOutput = [
@@ -70,7 +71,7 @@ final class ListCommandTest extends TestCase
         /** @var Kernel $console */
         $console = $this->app->get(Kernel::class);
         $exitCode = $console->call('cycle:db:list', ['database' => 'sqlite']);
-        $this->assertSame(0, $exitCode);
+        $this->assertSame(Command::SUCCESS, $exitCode);
 
         $realOutput = $console->output();
         $expectedOutput = [
