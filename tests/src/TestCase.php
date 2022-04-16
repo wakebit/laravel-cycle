@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Wakebit\LaravelCycle\Tests;
 
 use Cycle\Database\Config\DatabaseConfig;
+use Cycle\Migrations\Config\MigrationConfig;
 use Illuminate\Support\Arr;
-use Spiral\Migrations\Config\MigrationConfig;
 use Spiral\Tokenizer\Config\TokenizerConfig;
 use Wakebit\CycleBridge\Schema\Config\SchemaConfig;
 use Wakebit\LaravelCycle\ServiceProvider;

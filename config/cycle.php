@@ -1,7 +1,7 @@
 <?php
 
 use Cycle\Database\Config\DatabaseConfig;
-use Spiral\Migrations\Config\MigrationConfig;
+use Cycle\Migrations\Config\MigrationConfig;
 use Spiral\Tokenizer\Config\TokenizerConfig;
 use Wakebit\CycleBridge\Schema\Config\SchemaConfig;
 

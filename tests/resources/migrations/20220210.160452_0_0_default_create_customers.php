@@ -2,7 +2,7 @@
 
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
-use Spiral\Migrations\Migration;
+use Cycle\Migrations\Migration;
 
 class OrmDefaultF1d8224406ed3137f7c69875721c3747 extends Migration
 {
