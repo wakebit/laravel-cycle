@@ -13,6 +13,8 @@ use Cycle\Database\DatabaseProviderInterface;
 use Cycle\Migrations\Config\MigrationConfig;
 use Cycle\Migrations\FileRepository;
 use Cycle\Migrations\Migrator;
+use Cycle\ORM\EntityManager;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Factory;
 use Cycle\ORM\FactoryInterface;
 use Cycle\ORM\ORM;
@@ -192,13 +194,13 @@ final class ServiceProviderTest extends TestCase
     public function testTransaction(): void
     {
         $this->assertInstanceOf(
-            TransactionInterface::class,
-            $this->app->get(TransactionInterface::class)
+            EntityManagerInterface::class,
+            $this->app->get(EntityManagerInterface::class)
         );
 
         $this->assertInstanceOf(
-            Transaction::class,
-            $this->app->get(TransactionInterface::class)
+            EntityManager::class,
+            $this->app->get(EntityManagerInterface::class)
         );
     }
 

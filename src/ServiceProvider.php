@@ -12,14 +12,14 @@ use Cycle\Migrations\Config\MigrationConfig;
 use Cycle\Migrations\FileRepository;
 use Cycle\Migrations\Migrator;
 use Cycle\Migrations\RepositoryInterface;
+use Cycle\ORM\EntityManager;
+use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Factory;
 use Cycle\ORM\FactoryInterface;
 use Cycle\ORM\ORM;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\Schema;
 use Cycle\ORM\SchemaInterface;
-use Cycle\ORM\Transaction;
-use Cycle\ORM\TransactionInterface;
 use Cycle\Schema\Registry;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
@@ -59,7 +59,7 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->initiateDatabaseManager();
         $this->initiateTokenizer();
         $this->initiateORM();
-        $this->initiateTransaction();
+        $this->initiateEntityManager();
         $this->initiateMigrator();
     }
 
@@ -201,16 +201,16 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
         $this->app->alias(ORMInterface::class, ORM::class);
     }
 
-    private function initiateTransaction(): void
+    private function initiateEntityManager(): void
     {
-        $this->app->bind(TransactionInterface::class, static function (Container $app): TransactionInterface {
+        $this->app->bind(EntityManagerInterface::class, static function (Container $app): EntityManagerInterface {
             /** @var ORMInterface $orm */
             $orm = $app->make(ORMInterface::class);
 
-            return new Transaction($orm);
+            return new EntityManager($orm);
         });
 
-        $this->app->alias(TransactionInterface::class, Transaction::class);
+        $this->app->alias(EntityManagerInterface::class, EntityManager::class);
     }
 
     private function initiateMigrator(): void

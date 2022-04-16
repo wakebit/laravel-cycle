@@ -75,7 +75,7 @@ namespace App\Http\Controllers;
 
 use Cycle\Database\DatabaseProviderInterface;
 use Cycle\ORM\ORMInterface;
-use Cycle\ORM\TransactionInterface;
+use Cycle\ORM\EntityManagerInterface;
 use Illuminate\Http\Response;
 
 class HomeController
@@ -86,17 +86,17 @@ class HomeController
     /** @var ORMInterface */
     private $orm;
     
-    /** @var TransactionInterface */
-    private $transaction;
+    /** @var EntityManagerInterface */
+    private $em;
     
     public function __construct(
         DatabaseProviderInterface $dbal,
         ORMInterface $orm,
-        TransactionInterface $transaction
+        EntityManagerInterface $em
     ) {
         $this->dbal = $dbal;
         $this->orm = $orm;
-        $this->transaction = $transaction;
+        $this->em = $em;
     }
     
     public function __invoke()
@@ -112,8 +112,8 @@ class HomeController
         // Create, modify, delete entities using Transaction
         $user = new \App\Entity\User();
         $user->setName("Hello World");
-        $this->transaction->persist($user);
-        $this->transaction->run();
+        $this->em->persist($user);
+        $this->em->run();
         dump($user);
         
         // ORM
