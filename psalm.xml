@@ -23,7 +23,7 @@
 
         <MixedArgument>
             <errorLevel type="suppress">
-                <referencedFunction name="sprintf"/>
+                <file name="config/cycle.php"/>
             </errorLevel>
         </MixedArgument>
     </issueHandlers>
