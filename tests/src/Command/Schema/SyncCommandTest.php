@@ -81,14 +81,10 @@ namespace Wakebit\LaravelCycle\TestsApp\Entity;
 use Cycle\Annotated\Annotation\Column;
 use Cycle\Annotated\Annotation\Entity;
 
-/**
- * @Entity
- */
+#[Entity]
 class Tag
 {
-    /**
-     * @Column(type="primary")
-     */
+    #[Column(type: 'primary')]
     public int $id;
 }
 PHP;
