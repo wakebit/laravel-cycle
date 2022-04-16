@@ -14,22 +14,16 @@ final class Article
 {
     /**
      * @Column(type="primary")
-     *
-     * @var int
      */
-    private $id;
+    private int $id;
 
     /**
      * @Column(type="string")
-     *
-     * @var string
      */
-    private $title;
+    private string $title;
 
     /**
      * @Column(type="string")
-     *
-     * @var string
      */
-    private $description;
+    private string $description;
 }

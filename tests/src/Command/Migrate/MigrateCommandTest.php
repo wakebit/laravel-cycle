@@ -10,14 +10,9 @@ use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class MigrateCommandTest extends TestCase
 {
-    /** @var \Illuminate\Contracts\Config\Repository */
-    private $config;
-
-    /** @var DatabaseInterface */
-    private $db;
-
-    /** @var string */
-    private $migrationsTable;
+    private \Illuminate\Contracts\Config\Repository $config;
+    private DatabaseInterface $db;
+    private string $migrationsTable;
 
     protected function setUp(): void
     {

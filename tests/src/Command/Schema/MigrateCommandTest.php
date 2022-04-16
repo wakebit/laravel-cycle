@@ -10,17 +10,12 @@ use Wakebit\LaravelCycle\Tests\TestCase;
 
 final class MigrateCommandTest extends TestCase
 {
-    /** @var \Illuminate\Contracts\Config\Repository */
-    private $config;
-
-    /** @var DatabaseInterface */
-    private $db;
-
-    /** @var Filesystem */
-    private $files;
+    private \Illuminate\Contracts\Config\Repository $config;
+    private DatabaseInterface $db;
+    private Filesystem $files;
 
     /** @var array<string> */
-    private $migrationFiles;
+    private array $migrationFiles;
 
     protected function setUp(): void
     {
@@ -163,7 +158,8 @@ declare(strict_types=1);
 
 namespace Wakebit\LaravelCycle\TestsApp\Entity;
 
-use Cycle\Annotated\Annotation\Column;use Cycle\Annotated\Annotation\Entity;
+use Cycle\Annotated\Annotation\Column;
+use Cycle\Annotated\Annotation\Entity;
 
 /**
  * @Entity
@@ -172,10 +168,8 @@ class Tag
 {
     /**
      * @Column(type="primary")
-     *
-     * @var int
      */
-    public $id;
+    public int $id;
 }
 PHP;
 

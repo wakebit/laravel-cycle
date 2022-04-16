@@ -16,8 +16,7 @@ use Wakebit\LaravelCycle\ServiceProvider;
  */
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    /** @var \Illuminate\Contracts\Config\Repository */
-    private $config;
+    private \Illuminate\Contracts\Config\Repository $config;
 
     /** {@inheritDoc} */
     protected function getPackageProviders($app): array
@@ -40,10 +39,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->setMigrationConfigValue('directory', __DIR__ . '/../resources/migrations');
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function setDatabaseConfigValue(string $key, $value): void
+    protected function setDatabaseConfigValue(string $key, mixed $value): void
     {
         /** @var DatabaseConfig $databaseConfig */
         $databaseConfig = $this->config->get('cycle.database');
@@ -53,10 +49,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->config->set('cycle.database', new DatabaseConfig($databaseConfigAsArray));
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function setSchemaConfigValue(string $key, $value): void
+    protected function setSchemaConfigValue(string $key, mixed $value): void
     {
         /** @var SchemaConfig $schemaConfig */
         $schemaConfig = $this->config->get('cycle.orm.schema');
@@ -66,10 +59,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->config->set('cycle.orm.schema', new SchemaConfig($schemaConfigAsArray));
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function setTokenizerConfigValue(string $key, $value): void
+    protected function setTokenizerConfigValue(string $key, mixed $value): void
     {
         /** @var TokenizerConfig $tokenizerConfig */
         $tokenizerConfig = $this->config->get('cycle.orm.tokenizer');
@@ -79,10 +69,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->config->set('cycle.orm.tokenizer', new TokenizerConfig($tokenizerConfigAsArray));
     }
 
-    /**
-     * @param mixed $value
-     */
-    protected function setMigrationConfigValue(string $key, $value): void
+    protected function setMigrationConfigValue(string $key, mixed $value): void
     {
         /** @var MigrationConfig $migrationConfig */
         $migrationConfig = $this->config->get('cycle.migrations');
