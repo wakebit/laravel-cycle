@@ -10,11 +10,11 @@ declare(strict_types=1);
 
 namespace Wakebit\LaravelCycle\Tests\Command\Database;
 
+use Cycle\Database\Database;
+use Cycle\Database\DatabaseInterface;
+use Cycle\Database\DatabaseManager;
+use Cycle\Database\DatabaseProviderInterface;
 use Illuminate\Contracts\Console\Kernel;
-use Spiral\Database\Database;
-use Spiral\Database\DatabaseInterface;
-use Spiral\Database\DatabaseManager;
-use Spiral\Database\DatabaseProviderInterface;
 use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 

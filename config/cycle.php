@@ -1,6 +1,6 @@
 <?php
 
-use Spiral\Database\Config\DatabaseConfig;
+use Cycle\Database\Config\DatabaseConfig;
 use Spiral\Migrations\Config\MigrationConfig;
 use Spiral\Tokenizer\Config\TokenizerConfig;
 use Wakebit\CycleBridge\Schema\Config\SchemaConfig;
@@ -17,7 +17,7 @@ return [
 
         'connections' => [
             'sqlite' => [
-                'driver'  => \Spiral\Database\Driver\SQLite\SQLiteDriver::class,
+                'driver'  => \Cycle\Database\Driver\SQLite\SQLiteDriver::class,
                 'options' => [
                     'connection' => 'sqlite::memory:',
                     'username'   => '',
@@ -25,7 +25,7 @@ return [
                 ],
             ],
             'mysql' => [
-                'driver'  => \Spiral\Database\Driver\MySQL\MySQLDriver::class,
+                'driver'  => \Cycle\Database\Driver\MySQL\MySQLDriver::class,
                 'options' => [
                     'connection' => sprintf(
                         'mysql:host=%s;dbname=%s',
@@ -37,7 +37,7 @@ return [
                 ],
             ],
             'postgres'  => [
-                'driver'  => \Spiral\Database\Driver\Postgres\PostgresDriver::class,
+                'driver'  => \Cycle\Database\Driver\Postgres\PostgresDriver::class,
                 'options' => [
                     'connection' => sprintf(
                         'pgsql:host=%s;dbname=%s',
@@ -49,7 +49,7 @@ return [
                 ],
             ],
             'sqlServer' => [
-                'driver'  => \Spiral\Database\Driver\SQLServer\SQLServerDriver::class,
+                'driver'  => \Cycle\Database\Driver\SQLServer\SQLServerDriver::class,
                 'options' => [
                     'connection' => sprintf(
                         'sqlsrv:Server=%s;Database=%s',

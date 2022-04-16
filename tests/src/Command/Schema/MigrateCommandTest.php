@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Wakebit\LaravelCycle\Tests\Command\Schema;
 
+use Cycle\Database\DatabaseInterface;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Spiral\Database\DatabaseInterface;
 use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;
 

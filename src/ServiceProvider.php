@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Wakebit\LaravelCycle;
 
+use Cycle\Database\Config\DatabaseConfig;
+use Cycle\Database\DatabaseInterface;
+use Cycle\Database\DatabaseManager;
+use Cycle\Database\DatabaseProviderInterface;
 use Cycle\ORM\Factory;
 use Cycle\ORM\FactoryInterface;
 use Cycle\ORM\ORM;
@@ -17,10 +21,6 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Illuminate\Contracts\Cache\Factory as CacheFactory;
 use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\Container\Container;
-use Spiral\Database\Config\DatabaseConfig;
-use Spiral\Database\DatabaseInterface;
-use Spiral\Database\DatabaseManager;
-use Spiral\Database\DatabaseProviderInterface;
 use Spiral\Migrations\Config\MigrationConfig;
 use Spiral\Migrations\FileRepository;
 use Spiral\Migrations\Migrator;

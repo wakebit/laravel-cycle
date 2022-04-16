@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Wakebit\LaravelCycle\Tests\Command\Migrate;
 
-use Spiral\Database\DatabaseInterface;
+use Cycle\Database\DatabaseInterface;
 use Spiral\Migrations\Config\MigrationConfig;
 use Symfony\Component\Console\Command\Command;
 use Wakebit\LaravelCycle\Tests\TestCase;

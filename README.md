@@ -16,7 +16,7 @@ php artisan vendor:publish --provider="Wakebit\LaravelCycle\ServiceProvider" --t
 ```
 
 ## Usage
-1. Configure database connection in the `database` config section. You don't need to make any changes if you are already using any of Laravel-compatible database driver. It uses same `DB_*` environment variables. The contents of the key should return a `\Spiral\Database\Config\DatabaseConfig` instance. See more [here](https://cycle-orm.dev/docs/database-configuration/1.x/en).
+1. Configure database connection in the `database` config section. You don't need to make any changes if you are already using any of Laravel-compatible database driver. It uses same `DB_*` environment variables. The contents of the key should return a `\Cycle\Database\Config\DatabaseConfig` instance. See more [here](https://cycle-orm.dev/docs/database-configuration/1.x/en).
 2. Configure paths where your entities located in `tokenizer` section. By default, class locator looks them in app folder.
 
 Define entity:
@@ -73,10 +73,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use Cycle\Database\DatabaseProviderInterface;
 use Cycle\ORM\ORMInterface;
 use Cycle\ORM\TransactionInterface;
 use Illuminate\Http\Response;
-use Spiral\Database\DatabaseProviderInterface;
 
 class HomeController
 {
@@ -103,7 +103,7 @@ class HomeController
     {
         // DBAL
         $tables = $this->dbal->database()->getTables();
-        $tableNames = array_map(function (\Spiral\Database\TableInterface $table): string {
+        $tableNames = array_map(function (\Cycle\Database\TableInterface $table): string {
             return $table->getName();
         }, $tables);
 
