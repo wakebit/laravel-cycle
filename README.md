@@ -143,6 +143,7 @@ You can specify the name of migrations table, the path where migrations will be 
 | `php artisan cycle:migrate:init`     | Initialize migrator: create a table for migrations |                                                                                                               |
 | `php artisan cycle:migrate`          | Run all outstanding migrations                     | - `--one`: Execute only one (first) migration.<br>- `--force`: Force the operation to run when in production. |
 | `php artisan cycle:migrate:rollback` | Rollback the last migration                        | - `--all`: Rollback all executed migrations.<br>- `--force`: Force the operation to run when in production.   |
+| `php artisan cycle:migrate:replay`   | Replay (down, up) one or multiple migrations.      | - `--all`: Replay all migrations.                                                                             |
 | `php artisan cycle:migrate:status`   | Get a list of available migrations                 |                                                                                                               |
 
 ## Database commands

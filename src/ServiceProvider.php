@@ -273,6 +273,7 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 Command\Database\TableCommand::class,
                 Command\Migrate\InitCommand::class,
                 Command\Migrate\MigrateCommand::class,
+                Command\Migrate\ReplayCommand::class,
                 Command\Migrate\RollbackCommand::class,
                 Command\Migrate\StatusCommand::class,
                 Command\Schema\CacheCommand::class,

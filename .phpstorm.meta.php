@@ -8,4 +8,8 @@ namespace PHPSTORM_META {
     override(\Illuminate\Contracts\Container\Container::get(0), map([
         '' => '@',
     ]));
+
+    override(\Illuminate\Container\Container::get(0), map([
+        '' => '@',
+    ]));
 }
