@@ -183,7 +183,7 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
             return new GeneratorQueue($app, $schemaConfig);
         });
 
-        $this->app->singleton(CompilerInterface::class, static function (Container $app): CompilerInterface {
+        $this->app->bind(CompilerInterface::class, static function (Container $app): CompilerInterface {
             /** @var Registry $registry */
             $registry = $app->make(Registry::class);
 
