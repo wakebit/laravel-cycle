@@ -3,12 +3,13 @@
 ## Upgrading from 2.x from 1.x
 2.x is using Cycle ORM v2.
 
-Update the following dependency in your composer.json file:
-
-`wakebit/laravel-cycle` to `^2.0`
-
 ### Minimum PHP version
 PHP 8.0 is now the minimum required version.
+
+1. [Replace](#namespaces) namespaces.
+2. [Replace](#config) database config `connections` section.
+3. Update the following dependency in your composer.json file:
+`wakebit/laravel-cycle` to `^2.0`
 
 ### Namespaces
 - `spiral/database` is moved to a new repository `cycle/database` so now it has new namespace. To accommodate for these changes you need to replace all namespaces start from `Cycle\Database` with `Cycle\Database`.
