@@ -1,9 +1,11 @@
 # Cycle ORM integration with Laravel
-This package provides an integration [Cycle ORM v1](https://cycle-orm.dev) with the Laravel Framework. Internally, it uses [the bridge](https://github.com/wakebit/cycle-bridge) package that can be used with almost any framework.
+This package provides an integration [Cycle ORM](https://cycle-orm.dev) with Laravel. We are supporting integration both versions of the ORM. Internally, it uses [the bridge](https://github.com/wakebit/cycle-bridge) package that can be used with almost any framework.
 
 ## Requirements
 * PHP >= 8.0
-* Laravel 7, 8, 9
+* Laravel 7, 8, 9 
+
+The package uses Cycle ORM 1 or 2 (branches `v1.x` and `v2.x` accordingly).
 
 ## Installation
 1. Install the package via composer:
@@ -16,7 +18,7 @@ php artisan vendor:publish --provider="Wakebit\LaravelCycle\ServiceProvider" --t
 ```
 
 ## Usage
-1. Configure database connection in the `database` config section. You don't need to make any changes if you are already using any of Laravel-compatible database driver. It uses same `DB_*` environment variables. The contents of the key should return a `\Cycle\Database\Config\DatabaseConfig` instance. See more [here](https://cycle-orm.dev/docs/database-configuration/1.x/en).
+1. Configure database connection in the `database` config section. You don't need to make any changes if you are already using any of Laravel-compatible database driver. It uses same `DB_*` environment variables. The contents of the key should return a `\Cycle\Database\Config\DatabaseConfig` instance. See more [here](https://cycle-orm.dev/docs/database-connect/2.x/en).
 2. Configure paths where your entities located in `tokenizer` section. By default, class locator looks them in app folder.
 
 Define entity:
@@ -30,22 +32,14 @@ namespace App\Entity;
 use Cycle\Annotated\Annotation\Entity;
 use Cycle\Annotated\Annotation\Column;
 
-/**
- * @Entity
- */
+#[Entity]
 class User
 {
-    /**
-     * @Column(type="primary")
-     * @var int
-     */
-    protected $id;
+    #[Column(type: 'primary')]
+    protected int $id;
 
-    /**
-     * @Column(type="string")
-     * @var string
-     */
-    protected $name;
+    #[Column(type: 'string')]
+    protected string $name;
 
     public function getId(): int
     {
@@ -64,7 +58,7 @@ class User
 }
 ```
 
-You can take DBAL, ORM and Transaction from the container. Quick example of usage:
+You can take DBAL, ORM and Entity Manager from the container. Quick example of usage:
 
 ```php
 <?php
@@ -74,39 +68,24 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Cycle\Database\DatabaseProviderInterface;
-use Cycle\ORM\ORMInterface;
 use Cycle\ORM\EntityManagerInterface;
+use Cycle\ORM\ORMInterface;
 use Illuminate\Http\Response;
 
-class HomeController
-{
-    /** @var DatabaseProviderInterface */
-    private $dbal;
-    
-    /** @var ORMInterface */
-    private $orm;
-    
-    /** @var EntityManagerInterface */
-    private $em;
-    
+final class HomeController
+{    
     public function __construct(
-        DatabaseProviderInterface $dbal,
-        ORMInterface $orm,
-        EntityManagerInterface $em
+        private DatabaseProviderInterface $dbal,
+        private EntityManagerInterface $em,
+        private ORMInterface $orm,
     ) {
-        $this->dbal = $dbal;
-        $this->orm = $orm;
-        $this->em = $em;
     }
     
     public function __invoke()
     {
         // DBAL
         $tables = $this->dbal->database()->getTables();
-        $tableNames = array_map(function (\Cycle\Database\TableInterface $table): string {
-            return $table->getName();
-        }, $tables);
-
+        $tableNames = array_map(fn (\Cycle\Database\TableInterface $table): string => $table->getName(), $tables);
         dump($tableNames);
         
         // Create, modify, delete entities using Transaction
@@ -126,7 +105,7 @@ class HomeController
     }
 }
 ```
-See more on [the official Cycle ORM documentation](https://cycle-orm.dev/docs/readme/1.x/en).
+See more on [the official Cycle ORM documentation](https://cycle-orm.dev/docs/readme/2.x/en).
 
 ## Working with ORM schema
 Schema can be compiled and stored in the cache (recommended for production usage). You can specify the caching driver in `cycle.orm.schema` config key:
@@ -181,9 +160,10 @@ public function setUp(): void
     $this->artisan('cycle:migrate');
 }
 ```
-For another databases follow [this instruction](https://cycle-orm.dev/docs/advanced-testing/1.x/en) and drop all tables in the `tearDown` method.
+For another databases follow [this instruction](https://cycle-orm.dev/docs/advanced-testing/2.x/en) and drop all tables in the `tearDown` method.
 
 ## Advanced
+### Manually defined ORM schema
 If you want to use a manually defined ORM schema you can define it in the `cycle.orm.schema` `SchemaConfig`'s `map` config key (this key is not present by default):
 ```php
 use Wakebit\CycleBridge\Schema\Config\SchemaConfig;
@@ -199,9 +179,10 @@ return [
     // ...
 ]
 ```
-Manually defined schema should be presented as array. It will be passed to `\Cycle\ORM\Schema` constructor. See more [here](https://cycle-orm.dev/docs/advanced-manual/1.x/en).
+Manually defined schema should be presented as array. It will be passed to `\Cycle\ORM\Schema` constructor. See more [here](https://cycle-orm.dev/docs/schema-manual/2.x/en).
 
-Also, you can redefine the ORM schema compilation generators in the `cycle.orm.schema` `SchemaConfig`'s `generators` config key (this key is not present by default):
+### Custom schema compilation pipeline
+You can redefine the ORM schema compilation generators in the `cycle.orm.schema` `SchemaConfig`'s `generators` config key (this key is not present by default):
 ```php
 use Wakebit\CycleBridge\Schema\Config\SchemaConfig;
 
@@ -214,9 +195,11 @@ return [
                 'render' => [
                     \Cycle\Schema\Generator\ResetTables::class,         // re-declared table schemas (remove columns)
                     \Cycle\Schema\Generator\GenerateRelations::class,   // generate entity relations
+                    \Cycle\Schema\Generator\GenerateModifiers::class,   // generate changes from schema modifiers
                     \Cycle\Schema\Generator\ValidateEntities::class,    // make sure all entity schemas are correct
                     \Cycle\Schema\Generator\RenderTables::class,        // declare table schemas
                     \Cycle\Schema\Generator\RenderRelations::class,     // declare relation keys and indexes
+                    \Cycle\Schema\Generator\RenderModifiers::class,     // render all schema modifiers
                 ],
                 'postprocess' => [
                     \Cycle\Schema\Generator\GenerateTypecast::class,    // typecast non string columns
@@ -227,10 +210,10 @@ return [
     // ...
 ]
 ```
-Classes will be resolved by DI container. Default pipeline you can see [here](https://github.com/wakebit/cycle-bridge/blob/v1.x/src/Schema/Config/SchemaConfig.php#L32) in the bridge package.
+Classes will be resolved by DI container. Default pipeline you can see [here](https://github.com/wakebit/cycle-bridge/blob/v2.x/src/Schema/Config/SchemaConfig.php#L28) in the bridge package.
 
 # Notes
-- We don't have a plan to create Laravel Facades, magic helpers, etc. You are free to create their yourself if you need this.
+- We don't have a plan to create Laravel Facades, magic helpers, etc. You can create them yourself if you need to.
 
 # Credits
 - [Cycle ORM](https://github.com/cycle), PHP DataMapper ORM and Data Modelling Engine by SpiralScout.
