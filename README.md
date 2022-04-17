@@ -132,6 +132,7 @@ return [
 | `php artisan cycle:schema:cache`   | Compile and cache ORM schema                                                   |                                                                              |
 | `php artisan cycle:schema:clear`   | Clear cached schema (schema will be generated every request now)               |                                                                              |
 | `php artisan cycle:schema:sync`    | Sync ORM schema with database without intermediate migration (risk operation!) |                                                                              |
+| `php artisan cycle:schema:render`  | Render available Cycle ORM schemas                                             | - `--no-color`: Display output without colors.                               |
 
 ## Database migrations
 You can specify the name of migrations table, the path where migrations will be created in `cycle.migrations` config key.

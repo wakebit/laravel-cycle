@@ -278,6 +278,7 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
                 Command\Schema\CacheCommand::class,
                 Command\Schema\ClearCommand::class,
                 Command\Schema\MigrateCommand::class,
+                Command\Schema\RenderCommand::class,
                 Command\Schema\SyncCommand::class,
             ]);
         }
