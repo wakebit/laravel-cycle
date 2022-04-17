@@ -1,14 +1,16 @@
 # Cycle ORM integration with Laravel
-This package provides an integration [Cycle ORM v1](https://cycle-orm.dev) with the Laravel Framework. Internally, it uses [the bridge](https://github.com/wakebit/cycle-bridge) package that can be used with almost any framework.
+This package provides an integration [Cycle ORM](https://cycle-orm.dev) with Laravel. Internally, it uses [the bridge](https://github.com/wakebit/cycle-bridge) package that can be used with almost any framework.
 
 ## Requirements
 * PHP >= 7.2
 * Laravel 7, 8, 9
 
+This branch (1.x) uses Cycle ORM v1. See branch 2.x for Cycle ORM v2.
+
 ## Installation
 1. Install the package via composer:
 ```bash
-composer require wakebit/laravel-cycle
+composer require wakebit/laravel-cycle:1.0
 ```
 2. Publish the config `cycle.php`:
 ```bash
@@ -230,7 +232,7 @@ return [
 Classes will be resolved by DI container. Default pipeline you can see [here](https://github.com/wakebit/cycle-bridge/blob/v1.x/src/Schema/Config/SchemaConfig.php#L32) in the bridge package.
 
 # Notes
-- We don't have a plan to create Laravel Facades, magic helpers, etc. You are free to create their yourself if you need this.
+- We don't have a plan to create Laravel Facades, magic helpers, etc. You can create them yourself if you need to.
 
 # Credits
 - [Cycle ORM](https://github.com/cycle), PHP DataMapper ORM and Data Modelling Engine by SpiralScout.
