@@ -27,18 +27,16 @@ final class CacheCommandTest extends TestCase
 
     public function testGetSchemaFromCache(): void
     {
-        $cache = \Mockery::mock(CacheManagerInterface::class);
+        $cache = $this->createMock(CacheManagerInterface::class);
+        $cache->expects($this->once())->method('write');
+        $cache->expects($this->once())->method('isCached')->willReturn(true);
+        $cache->expects($this->once())->method('read')->willReturn([]);
+
         $this->app->instance(CacheManagerInterface::class, $cache);
-
-        $cache->shouldReceive('write');
-        $cache->shouldReceive('isCached')->once()->andReturn(true);
-        $cache->shouldReceive('read')->once()->andReturn([]);
-
         $this->artisan('cycle:schema:cache')
             ->expectsOutput('ORM schema cached successfully!')
             ->assertExitCode(Command::SUCCESS);
 
-        /** @var SchemaInterface $schema */
         $schema = $this->app->get(SchemaInterface::class);
 
         $this->assertFalse($schema->defines('customer'));

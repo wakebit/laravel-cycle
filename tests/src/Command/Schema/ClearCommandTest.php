@@ -12,10 +12,9 @@ final class ClearCommandTest extends TestCase
 {
     public function testClear(): void
     {
-        $cache = \Mockery::mock(CacheManagerInterface::class);
+        $cache = $this->createMock(CacheManagerInterface::class);
+        $cache->expects($this->once())->method('clear')->with();
         $this->app->instance(CacheManagerInterface::class, $cache);
-
-        $cache->shouldReceive('clear')->withNoArgs();
 
         $this->artisan('cycle:schema:clear')
             ->expectsOutput('ORM schema cache cleared!')
