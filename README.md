@@ -212,6 +212,20 @@ return [
 ```
 Classes will be resolved by DI container. Default pipeline you can see [here](https://github.com/wakebit/cycle-bridge/blob/v2.x/src/Schema/Config/SchemaConfig.php#L28) in the bridge package.
 
+### Using custom collection
+By default, ORM uses arrays for collection of items. If you want to use Laravel collections instead of or some another collection you can add the following key to config to `orm` section:
+```php
+return [
+    // ...
+    'orm' => [
+        'default_collection_factory_class' => \Cycle\ORM\Collection\IlluminateCollectionFactory::class,
+        // ...
+    ],
+    // ...
+]
+```
+The factory class will be resolved by container. It should implement the `\Cycle\ORM\Collection\CollectionFactoryInterface` interface.
+
 # Notes
 - We don't have a plan to create Laravel Facades, magic helpers, etc. You can create them yourself if you need to.
 

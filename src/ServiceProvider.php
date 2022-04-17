@@ -12,6 +12,7 @@ use Cycle\Migrations\Config\MigrationConfig;
 use Cycle\Migrations\FileRepository;
 use Cycle\Migrations\Migrator;
 use Cycle\Migrations\RepositoryInterface;
+use Cycle\ORM\Collection\CollectionFactoryInterface;
 use Cycle\ORM\EntityManager;
 use Cycle\ORM\EntityManagerInterface;
 use Cycle\ORM\Factory;
@@ -43,6 +44,7 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     private const DATABASE_CONFIG_KEY = 'cycle.database';
     private const MIGRATIONS_CONFIG_KEY = 'cycle.migrations';
+    private const ORM_DEFAULT_COLLECTION_FACTORY_CLASS_CONFIG_KEY = 'cycle.orm.default_collection_factory_class';
     private const ORM_SCHEMA_CONFIG_KEY = 'cycle.orm.schema';
     private const ORM_TOKENIZER_CONFIG_KEY = 'cycle.orm.tokenizer';
 
@@ -128,10 +130,22 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
         });
 
         $this->app->singleton(FactoryInterface::class, static function (Container $app): FactoryInterface {
+            /** @var ConfigRepository $laravelConfig */
+            $laravelConfig = $app->make(ConfigRepository::class);
+
+            /** @var class-string<CollectionFactoryInterface>|null $defaultCollectionFactoryClass */
+            $defaultCollectionFactoryClass = $laravelConfig->get(self::ORM_DEFAULT_COLLECTION_FACTORY_CLASS_CONFIG_KEY);
+            $defaultCollectionFactory = null;
+
+            if ($defaultCollectionFactoryClass !== null) {
+                /** @var CollectionFactoryInterface $defaultCollectionFactory */
+                $defaultCollectionFactory = $app->make($defaultCollectionFactoryClass);
+            }
+
             /** @var DatabaseProviderInterface $dbal */
             $dbal = $app->make(DatabaseProviderInterface::class);
 
-            return new Factory($dbal);
+            return new Factory($dbal, defaultCollectionFactory: $defaultCollectionFactory);
         });
 
         $this->app->singleton(\Cycle\Annotated\Embeddings::class, static function (Container $app): \Cycle\Annotated\Embeddings {
