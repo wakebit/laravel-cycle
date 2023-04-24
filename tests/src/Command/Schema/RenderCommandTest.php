@@ -20,7 +20,7 @@ final class RenderCommandTest extends TestCase
         $console = $this->app->get(Kernel::class);
         $exitCode = $console->call('cycle:schema:render', ['-nc' => true]);
         $realOutput = $console->output();
-        $expectedOutput = [
+        $articlesOutput = [
             '[customer] :: default.customers',
             'Entity:', Customer::class,
             'Mapper:', Mapper::class,
@@ -28,7 +28,9 @@ final class RenderCommandTest extends TestCase
             'Primary key:', 'id',
             'Fields', '(property -> db.field -> typecast)', 'id -> id -> int', 'name -> name',
             'Relations:', 'not defined',
+        ];
 
+        $customersOutput = [
             '[article] :: default.articles',
             'Entity:', Article::class,
             'Mapper:', Mapper::class,
@@ -43,6 +45,7 @@ final class RenderCommandTest extends TestCase
             : new \Illuminate\Foundation\Testing\Constraints\SeeInOrder($realOutput);
 
         $this->assertSame(Command::SUCCESS, $exitCode);
-        $this->assertThat($expectedOutput, $constraint);
+        $this->assertThat($articlesOutput, $constraint);
+        $this->assertThat($customersOutput, $constraint);
     }
 }

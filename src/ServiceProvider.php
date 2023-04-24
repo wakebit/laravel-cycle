@@ -51,8 +51,10 @@ final class ServiceProvider extends \Illuminate\Support\ServiceProvider
     /** {@inheritDoc} */
     public function register(): void
     {
-        /** @psalm-suppress DeprecatedMethod */
-        AnnotationRegistry::registerLoader('class_exists');
+        if (method_exists(AnnotationRegistry::class, 'registerLoader')) {
+            /** @psalm-suppress DeprecatedMethod */
+            AnnotationRegistry::registerLoader('class_exists');
+        }
 
         $configPath = __DIR__ . '/../config/cycle.php';
         $this->mergeConfigFrom($configPath, 'cycle');
