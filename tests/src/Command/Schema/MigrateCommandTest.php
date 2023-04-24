@@ -146,10 +146,10 @@ final class MigrateCommandTest extends TestCase
         }
 
         // New migration can be positioned in any order :|
-        $hasNewMigration = strpos($files[0], 'default_create_tags') !== false
-            || strpos($files[1], 'default_create_tags') !== false
-            || strpos($files[2], 'default_create_tags') !== false
-            || strpos($files[3], 'default_create_tags') !== false;
+        $hasNewMigration = strpos($files[0], 'create_tags') !== false
+            || strpos($files[1], 'create_tags') !== false
+            || strpos($files[2], 'create_tags') !== false
+            || strpos($files[3], 'create_tags') !== false;
 
         $this->assertTrue($hasNewMigration);
     }
